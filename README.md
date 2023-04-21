@@ -2,7 +2,11 @@
 The Simple Shell is a basic UNIX command line interpreter that allows you to execute simple commands with arguments. It's a minimalistic implementation that provides a basic prompt, parses commands and arguments, and executes them using the `execvp()` function.
 
 ## Usage
-To use the Simple Shell, navigate to the directory containing the executable and run the program using the following command:
+To use the Simple Shell, first compile the program by running the following command:
+```bash
+gcc -Wall -Werror -Wextra -pedantic *.c -o simple_shell
+```
+This will compile all the C files in the directory and create an executable called `simple_shell`. You can then run the program using the following command:
 ```bash
 ./simple_shell
 ```
