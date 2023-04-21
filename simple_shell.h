@@ -1,0 +1,6 @@
+#ifndef SIMPLE_SHELL_H
+#define SIMPLE_SHELL_H
+
+#define MAX_COMMAND_LENGTH 1024
+
+#endif /* SIMPLE_SHELL_H */
