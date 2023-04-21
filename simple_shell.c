@@ -25,12 +25,6 @@ int main(void) {
             exit(EXIT_SUCCESS);
         }
 
-	// handle exit command
-	if (strcmp(command, "exit") == 0) {
-            printf("Exiting shell...\n");
-            exit(EXIT_SUCCESS);
-        }
-
         // parse command and arguments
         int i = 0;
         args[i++] = strtok(command, " ");
