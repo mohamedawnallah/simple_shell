@@ -2,5 +2,6 @@
 #define SIMPLE_SHELL_H
 
 #define MAX_COMMAND_LENGTH 1024
+#define BUFFER_SIZE 1024
 
 #endif /* SIMPLE_SHELL_H */
