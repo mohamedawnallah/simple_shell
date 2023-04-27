@@ -5,74 +5,101 @@
 #include <sys/wait.h>
 #include "simple_shell.h"
 
-extern char **environ;
+int main(void)
+{
+	char command[MAX_COMMAND_LENGTH];
+	char *args[MAX_COMMAND_LENGTH / 2 + 1];
+
+	while (1)
+	{
+		fgets(command, MAX_COMMAND_LENGTH, stdin);
+
+		remove_newline(command);
+
+		if (feof(stdin))
+		{
+			exit(EXIT_SUCCESS);
+		}
+
+		parse_command(command, args);
+
+		if (strcmp(args[0], "env") == 0)
+		{
+			env_builtin();
+			continue;
+		}
+
+		execute_command(args);
+	}
+
+	return (0);
+}
 
 /**
- * env_builtin - prints the current environment variables
+ * Prints the current environment variables
  */
 void env_builtin(void)
 {
-char **env = environ;
-while (*env)
-{
-	printf("%s\n", *env);
-	env++;
-}
-}
+	char **env = environ;
 
-int main(void)
-{
-char *line;
-char *args[MAX_COMMAND_LENGTH / 2 + 1];
-pid_t pid;
-int status;
-
-while (1)
-{
-	printf("simple_shell$ ");
-	line = my_getline();
-
-	if (!line)
+	while (*env)
 	{
-		printf("\n");
-		exit(EXIT_SUCCESS);
+		printf("%s\n", *env);
+		env++;
 	}
+}
 
+/**
+ * Removes trailing newline character from string
+ */
+void remove_newline(char *str)
+{
+	if (str[strlen(str) - 1] == '\n')
+	{
+		str[strlen(str) - 1] = '\0';
+	}
+}
+
+/**
+ * Parses command and arguments from string
+ */
+void parse_command(char *command, char **args)
+{
 	int i = 0;
-	args[i++] = strtok(line, " ");
+
+	args[i++] = strtok(command, " ");
 
 	while (args[i - 1] != NULL && i < MAX_COMMAND_LENGTH / 2)
 	{
 		args[i++] = strtok(NULL, " ");
 	}
 	args[i] = NULL;
+}
 
-	if (strcmp(args[0], "env") == 0)
-	{
-		env_builtin();
-		continue;
-	}
+/**
+ * Executes given command and arguments
+ */
+void execute_command(char **args)
+{
+	pid_t pid;
+	int status;
 
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);
-	} else if (pid == 0)
+	}
+	else if (pid == 0)
 	{
 		if (execvp(args[0], args) == -1)
 		{
 			perror("execvp");
 			exit(EXIT_FAILURE);
 		}
-	} else
+	}
+	else
 	{
 		wait(&status);
 	}
-
-	free(line);
 }
-
-	return (0);
-}
-
