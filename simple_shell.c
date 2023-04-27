@@ -5,6 +5,9 @@
 #include <sys/wait.h>
 #include "simple_shell.h"
 
+/**
+ * Entry point for simple shell
+ */
 int main(void)
 {
 	char command[MAX_COMMAND_LENGTH];
