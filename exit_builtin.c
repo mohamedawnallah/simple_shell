@@ -4,7 +4,16 @@
 /**
  * Exits the shell
  */
-void exit_builtin(void)
+void exit_builtin(char **args)
 {
-	exit(EXIT_SUCCESS);
+	if (args[1] != NULL)
+	{
+		int status = atoi(args[1]);
+
+		exit(status);
+	}
+	else
+	{
+		exit(EXIT_SUCCESS);
+	}
 }
