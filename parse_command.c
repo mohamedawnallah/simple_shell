@@ -12,6 +12,11 @@ void parse_command(char *command, char **args)
 
 	while (args[i - 1] != NULL && i < MAX_COMMAND_LENGTH / 2)
 	{
+		if (args[i - 1][0] == '#')
+		{
+			args[i - 1] = NULL;
+			break;
+		}
 		args[i++] = strtok(NULL, " ");
 	}
 	args[i] = NULL;
