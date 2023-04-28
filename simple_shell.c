@@ -32,7 +32,13 @@ int main(void)
 
 		if (strcmp(args[0], "exit") == 0)
 		{
-			exit_builtin();
+			int status = EXIT_SUCCESS;
+
+			if (args[1] != NULL)
+			{
+				status = atoi(args[1]);
+			}
+			exit_builtin(status);
 		}
 
 		if (strcmp(args[0], "env") == 0)
