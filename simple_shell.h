@@ -6,6 +6,7 @@
 extern char **environ;
 
 void env_builtin(void);
+void exit_builtin(void);
 void remove_newline(char *str);
 void parse_command(char *command, char **args);
 void execute_command(char **args);
