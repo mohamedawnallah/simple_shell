@@ -47,22 +47,33 @@ void execute_command(char **args)
 	pid_t pid;
 	int status;
 
+	char *command_path = search_path(args[0]);
+
+	if (command_path == NULL)
+	{
+		fprintf(stderr, "simple_shell: command not found: %s\n", args[0]);
+		return;
+	}
+
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
+		free(command_path);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
-		if (execvp(args[0], args) == -1)
+		if (execvp(command_path, args) == -1)
 		{
 			perror("execvp");
+			free(command_path);
 			exit(EXIT_FAILURE);
 		}
 	}
 	else
 	{
+		free(command_path);
 		wait(&status);
 	}
 }

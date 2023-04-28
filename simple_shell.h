@@ -9,6 +9,7 @@ void env_builtin(void);
 void exit_builtin(int status);
 void remove_newline(char *str);
 void parse_command(char *command, char **args);
+char *search_path(char *command);
 void execute_commands(char *commands);
 void execute_command(char **args);
 
